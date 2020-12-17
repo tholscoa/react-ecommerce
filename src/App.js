@@ -10,12 +10,19 @@ const TestPage = () => (
   </div>
 );
 
+const TestPageWithParam = (props) => (
+  <div>
+    <h1>I am with param: {props.match.params.name}</h1>
+  </div>
+);
+
 function App() {
   return (
     <div>
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route exact path='/testpage' component={TestPage} />
+        <Route exact path='/testpage/:name' component={TestPageWithParam} />
       </Switch>
     </div>
   );
