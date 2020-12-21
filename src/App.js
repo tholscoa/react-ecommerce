@@ -5,6 +5,7 @@ import ShopPage from './pages/shop/shop.component';
 
 // Remember to import BrowserRouter inside index.js
 import { Route, Switch, Link } from 'react-router-dom';
+import Header from './components/header/header.component';
 
 const TestPageWithParam = (props) => (
   <div>
@@ -15,8 +16,10 @@ const TestPageWithParam = (props) => (
 function App() {
   return (
     <div>
-      Links: <Link to='/'>Home</Link> 
-      <Link to='/testpage'>  Test Page</Link>
+      <Header />
+      <hr /> 
+      {/* Links: <Link to='/'>Home</Link> 
+      <Link to='/testpage'>  Test Page</Link> */}
 
       <Switch>
         <Route exact path='/' component={HomePage} />
