@@ -6,6 +6,7 @@ import ShopPage from './pages/shop/shop.component';
 // Remember to import BrowserRouter inside index.js
 import { Route, Switch, Link } from 'react-router-dom';
 import Header from './components/header/header.component';
+import SignInSignOut from './components/signinsignup/sign-in-sign-out.component';
 
 const TestPageWithParam = (props) => (
   <div>
@@ -24,6 +25,7 @@ function App() {
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route exact path='/shop' component={ShopPage} />
+        <Route exact path='/signin' component={SignInSignOut} />
         {/* <Route exact path='/shop/hats' component={Products.Hats} />
         <Route exact path='/shop/jackets' component={Products.Jackets} />
         <Route exact path='/shop/sneakers' component={Products.Sneakers} />
