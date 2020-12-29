@@ -8,7 +8,7 @@ import ShopPage from './pages/shop/shop.component';
 import { Route, Switch, Link } from 'react-router-dom';
 import Header from './components/header/header.component';
 import SignInSignOut from './components/signinsignup/sign-in-sign-out.component';
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserAuthProfile } from './firebase/firebase.utils';
 
 const TestPageWithParam = (props) => (
   <div>
@@ -28,8 +28,24 @@ class App extends React.Component {
 
 
   componentDidMount(){
-    auth.onAuthStateChanged(user => {
-      this.setState({currentUser: user})
+   this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      // this.setState({currentUser: user})
+      if(userAuth){
+        const userRef = await createUserAuthProfile(userAuth);
+
+        userRef.onSnapshot(snapShot => {
+          // console.log(snapShot); 
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          })
+        })
+      }
+      else{
+        this.setState({currentUser: userAuth});
+      }
       
       // console.log(user);
     });
@@ -64,4 +80,4 @@ class App extends React.Component {
   }
 }
 
-export default App; 
+export default App;
