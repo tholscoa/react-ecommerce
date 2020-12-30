@@ -5,7 +5,7 @@ import HomePage from './pages/homepage/homepage.page';
 import ShopPage from './pages/shop/shop.component';
 
 // Remember to import BrowserRouter inside index.js
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch, Link, Redirect } from 'react-router-dom';
 import Header from './components/header/header.component';
 import SignInSignOut from './components/signinsignup/sign-in-sign-out.component';
 import { auth, createUserAuthProfile } from './firebase/firebase.utils';
@@ -71,7 +71,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route exact path='/shop' component={ShopPage} />
-          <Route exact path='/signin' component={SignInSignOut} />
+          <Route exact path='/signin' render={ ()=> this.props.currentUser ? (<Redirect to='/' />) : (<SignInSignOut />)} />
           {/* <Route exact path='/shop/hats' component={Products.Hats} />
           <Route exact path='/shop/jackets' component={Products.Jackets} />
           <Route exact path='/shop/sneakers' component={Products.Sneakers} />
@@ -84,8 +84,12 @@ class App extends React.Component {
   }
 }
 
+const mapStateToProps = ({user})=>({
+  currentUser: user.currentUser
+})
+
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
